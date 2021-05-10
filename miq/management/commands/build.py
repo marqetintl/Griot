@@ -20,7 +20,7 @@ class Command(BaseCommand):
             return
 
         self.stdout.write('Building client app ...')
-        subprocess.run(['npm', 'run', 'build'], cwd=client_dir, shell=True)
+        subprocess.run(['yarn', 'build'], cwd=client_dir)
 
         self.stdout.write('Collecting static files ...')
         call_command(

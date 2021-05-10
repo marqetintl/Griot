@@ -10,7 +10,10 @@ local_settings.py
 db.sqlite3
 db.sqlite3-journal
 
-.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/launch.json
+
 .idea/
 
 /config/settings/.env

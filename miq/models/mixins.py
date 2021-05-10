@@ -5,7 +5,7 @@ from django.db import models
 
 class BaseModelMixin(models.Model):
     """
-    Abstract Model class creation and modification datetimes
+    Abstract Model class with creation and modification datetimes
     ['site', 'created', 'updated']
     """
 
