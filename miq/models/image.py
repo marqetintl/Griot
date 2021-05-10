@@ -17,8 +17,8 @@ class Image(BaseModelMixin):
 
     class Meta:
         ordering = ('-updated', '-created',)
-        verbose_name = 'Image'
-        verbose_name_plural = 'Images'
+        verbose_name = _('Image')
+        verbose_name_plural = _('Images')
 
     def __str__(self):
         return f'{self.src.name}'
@@ -31,6 +31,7 @@ class Image(BaseModelMixin):
         help_text="Select an image file",
         upload_to=upload_to)
 
+    caption = models.CharField(max_length=400, blank=True)
     alt_text = models.CharField(max_length=400, blank=True)
     is_active = models.BooleanField(default=True)
-    position = models.PositiveIntegerField(default=0)
+    position = models.PositiveIntegerField(default=1)
