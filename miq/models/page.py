@@ -96,7 +96,7 @@ class Page(AbstractPage):
     dt_published = models.DateTimeField(
         blank=True, null=True, help_text=_('Publication date'))
 
-    # objects = PageManager()
+    objects = PageManager()
 
     def __str__(self):
         return f'{self.site.name} {self.label} page'
@@ -108,6 +108,7 @@ class Page(AbstractPage):
 
         super().save(*args, **kwargs)
 
+    @property
     def detail_url(self):
         if not self.is_published:
             return

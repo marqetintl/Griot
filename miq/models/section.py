@@ -5,7 +5,11 @@ from django.utils.translation import gettext_lazy as _
 from .mixins import BaseModelMixin
 
 
-__all__ = ['SectionType', 'Section', 'SectionImageMeta']
+__all__ = [
+    'SectionType', 'Section', 'SectionImageMeta',
+    'ImageSection', 'MarkdownSection', 'TextSection',
+
+]
 
 
 class SectionType(models.TextChoices):
@@ -83,3 +87,33 @@ class SectionImageMeta(SectionAbstract):
 
     section = models.ForeignKey('miq.Section', on_delete=models.CASCADE)
     img = models.ForeignKey('miq.Image', on_delete=models.CASCADE)
+
+
+# PROXIES
+
+
+class ImageSection(Section):
+    class Meta:
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        self.type = SectionType.IMG
+        super().save(*args, **kwargs)
+
+
+class MarkdownSection(Section):
+    class Meta:
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        self.type = SectionType.MD
+        super().save(*args, **kwargs)
+
+
+class TextSection(Section):
+    class Meta:
+        proxy = True
+
+    def save(self, *args, **kwargs):
+        self.type = SectionType.TXT
+        super().save(*args, **kwargs)
