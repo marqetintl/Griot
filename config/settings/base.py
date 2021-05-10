@@ -1,11 +1,30 @@
-
+import environ
 from pathlib import Path
+
+env = environ.Env(
+    DEBUG=(bool, False),
+    SECRET_KEY=(str, 'my-secret-key-goes-here'),
+
+    GH_DB_NAME=(str, 'grio_db'),
+    GH_DB_USER=(str, 'postgres'),
+    GH_DB_PWD=(str, 'postgres'),
+    GH_DB_HOST=(str, '127.0.0.1'),
+    GH_DB_PORT=(str, '5432'),
+)
+
+environ.Env.read_env()
 
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
-SECRET_KEY = 'django-insecure-iz9c^kxe&yr&(npud-^$4tid(-hfvz9y-cmq^!9en7^k%#ku6^'
+TEMPLATES_DIR = BASE_DIR / 'templates'
+CLIENT_DIR = BASE_DIR / 'client'
+BUILD_DIR = CLIENT_DIR / 'packages/griot-app/build'
 
-DEBUG = True
+CORS_ORIGIN = None
+
+SECRET_KEY = env('SECRET_KEY')
+
+DEBUG = env('DEBUG')
 
 ALLOWED_HOSTS = []
 
@@ -16,6 +35,18 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    #
+    'django.contrib.sites',
+    'django.contrib.sitemaps',
+
+    # VENDORS
+    'rest_framework',
+
+    # CORE
+    'miq.apps.MiqConfig',
+
+    # APPS
 ]
 
 MIDDLEWARE = [
@@ -33,7 +64,7 @@ ROOT_URLCONF = 'config.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [TEMPLATES_DIR],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -48,12 +79,6 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'config.wsgi.application'
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
-}
 
 AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator', },
@@ -62,16 +87,68 @@ AUTH_PASSWORD_VALIDATORS = [
     {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator', },
 ]
 
-LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+"""
+# USER MODEL
+"""
 
-USE_I18N = True
+AUTH_USER_MODEL = 'miq.User'
 
-USE_L10N = True
+
+"""
+# AUTHENTICATION
+"""
+
+# LOGIN_URL = reverse_lazy('accounts:login')
+# LOGIN_REDIRECT_URL = reverse_lazy('blog:account')
+
+
+"""
+# REST FRAMEWORK
+"""
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Set for all views
+    ],
+
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+    ],
+
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 16,
+}
+
+
+"""
+# SITE
+"""
+
+SITE_ID = 1
+
+"""
+# API
+"""
+
+API_PATH = 'api/v1/'
+
+"""
+LANG & LOCATION
+"""
 
 USE_TZ = True
+USE_L10N = True
+USE_I18N = True
+TIME_ZONE = 'America/New_York'
+LANGUAGE_CODE = 'en-us'
 
-STATIC_URL = '/static/'
+
+"""
+AUTO FIELD
+"""
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'

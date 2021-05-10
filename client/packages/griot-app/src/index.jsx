@@ -13,6 +13,11 @@ ReactDOM.render(
             <Switch>
                 <Route path="/admin/" component={Admin} />
             </Switch>
+            <div className="">
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Qui corporis obcaecati facere, tempore
+                asperiores in pariatur nesciunt tenetur ipsam rem odit vel? Quam nobis voluptatibus omnis facilis in
+                temporibus? Eligendi.
+            </div>
         </BrowserRouter>
     </React.StrictMode>,
     document.getElementById("root")
