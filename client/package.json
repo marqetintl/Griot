@@ -1,0 +1,10 @@
+{
+    "private": true,
+    "name": "griot",
+    "workspaces": [
+        "packages/*"
+    ],
+    "devDependencies": {
+        "craco": "^0.0.3"
+    }
+}
