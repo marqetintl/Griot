@@ -1,3 +1,4 @@
+from miq.models.section import Section
 from uuid import uuid4
 
 from django.db import models
@@ -13,7 +14,6 @@ __all__ = ['Index', 'Page', 'PageSectionMeta']
 class AbstractPage(BaseModelMixin):
     class Meta:
         abstract = True
-        ordering = ('-created', '-updated')
 
     site = models.ForeignKey(
         Site, on_delete=models.CASCADE,
@@ -24,19 +24,26 @@ class AbstractPage(BaseModelMixin):
         null=True, blank=True
     )
 
+    def update_sections_source(self):
+        to_update = self.sections.exclude(source=self.slug)
+        if to_update.exists():
+            to_update.update(source=self.slug)
+
 
 # INDEX PAGE
 
 class IndexManager(models.Manager):
-    def get_queryset(self):
-        return super().get_queryset().prefetch_related('sections').select_related('site')
+    def get_queryset(self, *args, **kwargs):
+        return super().get_queryset(*args, **kwargs).prefetch_related('sections').select_related('site')
 
 
 class Index(AbstractPage):
     class Meta:
+        ordering = ('-created', '-updated')
         verbose_name = _('Index page')
         verbose_name_plural = _('Index page')
 
+    # From abstract: title
     site = models.OneToOneField(
         Site, on_delete=models.CASCADE,
         related_name='index')
@@ -73,6 +80,7 @@ class PageManager(models.Manager):
 
 class Page(AbstractPage):
     class Meta:
+        ordering = ('-created', '-updated')
         verbose_name = _('Page')
         verbose_name_plural = _('Page')
 
@@ -133,6 +141,7 @@ class Page(AbstractPage):
 
 class PageSectionMeta(BaseModelMixin):
     class Meta:
+        ordering = ('-created', '-updated')
         # Do not add same sections to multiple pages
         constraints = [
             models.UniqueConstraint(

@@ -58,6 +58,11 @@ class Section(SectionAbstract):
 
     # From Abstract: title, text, url
 
+    # Used to group sections
+    source = models.SlugField(
+        max_length=100, db_index=True,
+        null=True, blank=True)
+
     type = models.CharField(
         max_length=15, choices=SectionType.choices,
         default=SectionType.TXT

@@ -1,16 +1,7 @@
-from django.contrib.auth import get_user_model
 
 from django.test import TransactionTestCase
 
-User = get_user_model()
-
-
-class UserMixin:
-    def create_user(self, username, password):
-        user = User.objects.create_user(username=username)
-        user.set_password(password)
-        user.save()
-        return user
+from miq.tests.mixins import UserMixin
 
 
 class TestPage(UserMixin, TransactionTestCase):

@@ -134,7 +134,7 @@ SITE_ID = 1
 # API
 """
 
-API_PATH = 'api/v1/'
+API_PATH = 'api/v1'
 
 """
 LANG & LOCATION
