@@ -4,6 +4,9 @@ from pathlib import Path
 env = environ.Env(
     DEBUG=(bool, False),
     SECRET_KEY=(str, 'my-secret-key-goes-here'),
+    DB_NAME=(str, ''),
+    DB_USER=(str, ''),
+    DB_PWD=(str, ''),
 
     GH_DB_NAME=(str, 'grio_db'),
     GH_DB_USER=(str, 'postgres'),

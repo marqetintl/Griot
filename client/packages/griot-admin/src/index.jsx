@@ -1,4 +1,4 @@
-import { BrowserRouter, Route, Switch } from "react-router-dom";
+import { BrowserRouter, NavLink, Route, Switch } from "react-router-dom";
 
 export default function Admin(props) {
     const { path } = props.match;
@@ -6,24 +6,41 @@ export default function Admin(props) {
     return (
         <BrowserRouter>
             <div className="">
-                <Comp2 />
-                <Switch>
-                    <Route path={`${path}settings/`} component={Comp} />
-                </Switch>
+                <NavBar {...props} path={path} />
+                <Main {...props} path={path} />
             </div>
         </BrowserRouter>
     );
 }
 
-const Comp = (props) => {
+const Main = (props) => {
+    const { path } = props;
+
     return (
         <div className="">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Blanditiis consectetur, atque
-            et illo impedit architecto a pariatur minus iure nostrum facilis quos quod facere quo
-            magnam tenetur quia cumque non?
+            <Switch>
+                {/* <Route path={`${path}settings/`} component={Comp} /> */}
+                <Route path={`${path}settings/`} component={Settings} />
+                <Route path={`${path}`} component={Dashboard} />
+            </Switch>
         </div>
     );
 };
-const Comp2 = (props) => {
-    return <div className="">2</div>;
+
+const Dashboard = (props) => {
+    return <div className="">Dashboard</div>;
+};
+
+const Settings = (props) => {
+    return <div className="">Settings</div>;
+};
+
+const NavBar = (props) => {
+    const { path } = props;
+    return (
+        <div className="">
+            <NavLink to={path}>Dashboard</NavLink>
+            <NavLink to={`${path}settings/`}>Settings</NavLink>
+        </div>
+    );
 };

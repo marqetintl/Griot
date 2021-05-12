@@ -20,3 +20,7 @@ class ListView(ViewMixin, generic.ListView):
 
 class DetailView(ViewMixin, generic.DetailView):
     pass
+
+
+class TemplateView(ViewMixin, generic.TemplateView):
+    pass
