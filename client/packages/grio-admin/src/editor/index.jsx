@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Redirect, Route, Switch } from "react-router";
 
 import "./scss/main.scss";
+import Section from "./Section";
 
 export const EDITOR_PATH = "/grio/editor/";
 export const PAGE_CREATE_PATH = `${EDITOR_PATH}pages/`;
@@ -45,7 +46,11 @@ const PageUpdateView = (props) => {
                                 tabIndex={1}
                             />
                         </div>
-                        <div className="editor-sections">{txt}</div>
+                        <div className="editor-sections">
+                            {sections.map((data) => (
+                                <Section data={data} key={data.slug} />
+                            ))}
+                        </div>
                     </div>
                 </div>
             </section>
@@ -53,229 +58,14 @@ const PageUpdateView = (props) => {
     );
 };
 
-const txt = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptas, sequi
-molestiae officiis labore aliquam adipisci debitis totam ullam? Corporis optio
-officiis velit, laboriosam ullam dolores neque unde tempora magni corrupti.
-
-
-`;
+const sections = [
+    { text: "## this is a header", type: "MD", html: "", slug: 1 },
+    { text: "## this is a header", type: "TXT", html: "", slug: 2 },
+    { text: "### this is a another header", type: "MD", html: "", slug: 3 },
+    {
+        text: "Lorem ipsum dolor sit, amet consectetur adipisicing elit. Tenetur earum sequi provident! Dolor eligendi corporis voluptatum error quasi, voluptas doloribus quam tempore doloremque vero provident soluta pariatur sapiente quos odio.",
+        type: "MD",
+        html: "",
+        slug: 5,
+    },
+];
