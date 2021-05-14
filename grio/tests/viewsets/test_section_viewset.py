@@ -6,7 +6,7 @@ from miq.models import Section
 
 from miq.tests.mixins import UserMixin
 
-list_path = reverse_lazy('miq:section-list')
+list_path = reverse_lazy('grio:section-list')
 
 
 class Mixin(UserMixin):
@@ -24,7 +24,7 @@ class TestSectionViewset(Mixin, APITestCase):
 
     def test_partial_update(self):
         slug = Section.objects.create().slug
-        path = reverse_lazy('miq:section-detail', args=[slug])
+        path = reverse_lazy('grio:section-detail', args=[slug])
 
         title = 'I am a title'
         r = self.client.patch(
@@ -39,7 +39,7 @@ class TestSectionViewset(Mixin, APITestCase):
 
     def test_partial_update_no_type(self):
         section = Section.objects.create()
-        path = reverse_lazy('miq:section-detail', args=[section.slug])
+        path = reverse_lazy('grio:section-detail', args=[section.slug])
         r = self.client.patch(path, data={}, format='json')
         self.assertEqual(r.status_code, 400)
 

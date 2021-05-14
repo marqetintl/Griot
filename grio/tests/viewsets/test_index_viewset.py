@@ -8,7 +8,7 @@ from miq.models.section import Section
 
 from miq.tests.mixins import UserMixin, SiteMixin
 
-path = reverse_lazy('miq:index-detail', args=['current'])
+path = reverse_lazy('grio:index-detail', args=['current'])
 
 
 class Mixin(SiteMixin, UserMixin):
@@ -27,7 +27,7 @@ class TestPageViewset(Mixin, APITestCase):
             password=self.password)
 
     def test_on_section_add(self):
-        path = reverse_lazy('miq:index-section', args=['current'])
+        path = reverse_lazy('grio:index-section', args=['current'])
 
         # Add section
         section_slug = Section.objects.create().slug
@@ -43,7 +43,7 @@ class TestPageViewset(Mixin, APITestCase):
         self.assertEqual(section.source, f'{index.slug}')
 
         # Retriev page sections
-        section_list_path = reverse_lazy('miq:section-list')
+        section_list_path = reverse_lazy('grio:section-list')
         r = self.client.get(section_list_path, {'source': index.slug})
         self.assertEqual(r.data.get('count'), 1)
 

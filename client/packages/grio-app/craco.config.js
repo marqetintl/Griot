@@ -2,8 +2,9 @@ const path = require("path");
 const { getLoader, loaderByName } = require("@craco/craco");
 
 const packages = [];
-packages.push(path.join(__dirname, "../griot-admin/src/"));
-packages.push(path.join(__dirname, "../griot-shared/src/"));
+packages.push(path.join(__dirname, "../grio-admin/src/"));
+packages.push(path.join(__dirname, "../grio-public/src/"));
+packages.push(path.join(__dirname, "../miq-shared/src/"));
 
 module.exports = {
     webpack: {
@@ -12,9 +13,7 @@ module.exports = {
         configure: (webpackConfig, args) => {
             const { isFound, match } = getLoader(webpackConfig, loaderByName("babel-loader"));
             if (isFound) {
-                const include = Array.isArray(match.loader.include)
-                    ? match.loader.include
-                    : [match.loader.include];
+                const include = Array.isArray(match.loader.include) ? match.loader.include : [match.loader.include];
                 match.loader.include = include.concat(packages);
             }
             return webpackConfig;

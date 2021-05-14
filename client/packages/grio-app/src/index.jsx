@@ -2,15 +2,17 @@ import React from "react";
 import ReactDOM from "react-dom";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
 
-import Admin from "@griot/admin";
+import Admin from "@grio/admin";
 
 import "./index.scss";
+
 import reportWebVitals from "./reportWebVitals";
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Switch>
+                {/* /grio/ */}
                 <Route path="/grio/" component={Admin} />
             </Switch>
         </BrowserRouter>

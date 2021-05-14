@@ -1,14 +1,18 @@
 {
     "private": true,
-    "name": "griot",
+    "name": "@miq/griot",
     "workspaces": [
         "packages/*"
     ],
+    "scripts": {
+        "start": "cd packages/grio-app && yarn start",
+        "build": "cd packages/grio-app && yarn build"
+    },
+    "dependencies": {
+        "lodash": "^4.17.21",
+        "react-bootstrap-icons": "^1.4.1"
+    },
     "devDependencies": {
         "craco": "^0.0.3"
-    },
-    "scripts": {
-        "start": "cd packages/griot-app && yarn start",
-        "build": "cd packages/griot-app && yarn build"
     }
 }

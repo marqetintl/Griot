@@ -8,7 +8,7 @@ env = environ.Env(
     DB_USER=(str, ''),
     DB_PWD=(str, ''),
 
-    GH_DB_NAME=(str, 'grio_db'),
+    GH_DB_NAME=(str, 'localhost'),
     GH_DB_USER=(str, 'postgres'),
     GH_DB_PWD=(str, 'postgres'),
     GH_DB_HOST=(str, '127.0.0.1'),
@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # CORE
+    'grio.apps.GrioConfig',
     'miq.apps.MiqConfig',
 
     # APPS

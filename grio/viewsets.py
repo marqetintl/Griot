@@ -6,7 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.serializers import ValidationError
 
 from miq.models import Section, Page, Index
-from miq.auth.serializers import (
+from .serializers import (
     SectionSerializer,
     ImageSectionSerializer,
     TextSectionSerializer, MarkdownSectionSerializer,

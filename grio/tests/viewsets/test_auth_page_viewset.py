@@ -7,12 +7,12 @@ from miq.models.section import Section
 
 from miq.tests.mixins import UserMixin, SiteMixin
 
-list_path = reverse_lazy('miq:page-list')
+list_path = reverse_lazy('grio:page-list')
 
 
 class Mixin(SiteMixin, UserMixin):
     def get_detail_path(self, slug):
-        return reverse_lazy('miq:page-detail', args=[slug])
+        return reverse_lazy('grio:page-detail', args=[slug])
 
 
 class TestPageViewset(Mixin, APITestCase):
@@ -31,7 +31,7 @@ class TestPageViewset(Mixin, APITestCase):
     def test_on_section_add(self):
         slug = Page.objects.create(
             label='Section test page', site=self.site).slug
-        path = reverse_lazy('miq:page-section', args=[slug])
+        path = reverse_lazy('grio:page-section', args=[slug])
 
         # No slug
         r = self.client.post(path, data={}, format='json')
@@ -49,7 +49,7 @@ class TestPageViewset(Mixin, APITestCase):
         self.assertEqual(section.source, f'{slug}')
 
         # Retriev page sections
-        section_list_path = reverse_lazy('miq:section-list')
+        section_list_path = reverse_lazy('grio:section-list')
         r = self.client.get(section_list_path, {'source': slug})
         self.assertEqual(r.data.get('count'), 1)
 
