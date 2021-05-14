@@ -1,12 +1,13 @@
-from miq.models.section import Section
+
 from uuid import uuid4
 
 from django.db import models
 from django.utils import timezone
+from django.utils.timesince import timesince
 from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
 
-from .mixins import BaseModelMixin
+from miq.models.mixins import BaseModelMixin
 
 __all__ = ['Index', 'Page', 'PageSectionMeta']
 
@@ -14,10 +15,6 @@ __all__ = ['Index', 'Page', 'PageSectionMeta']
 class AbstractPage(BaseModelMixin):
     class Meta:
         abstract = True
-
-    site = models.ForeignKey(
-        Site, on_delete=models.CASCADE,
-        related_name='pages')
 
     title = models.CharField(
         max_length=250, help_text=_('Page Meta title'),
@@ -57,6 +54,9 @@ class Index(AbstractPage):
 
 class PageQueryset(models.QuerySet):
 
+    def parents(self):
+        return self.filter(parent__isnull=True)
+
     def draft(self):
         return self.filter(is_published=False)
 
@@ -65,6 +65,9 @@ class PageQueryset(models.QuerySet):
 
 
 class PageManager(models.Manager):
+
+    def parents(self):
+        return self.get_queryset().parents()
 
     def draft(self):
         return self.get_queryset().draft()
@@ -84,14 +87,39 @@ class Page(AbstractPage):
         verbose_name = _('Page')
         verbose_name_plural = _('Page')
 
-    # MUST BE the same as related name
-    source = models.CharField(max_length=100, blank=True, null=True)
+    def __str__(self):
+        return f'{self.site.name} {self.label} page'
 
+    def save(self, *args, **kwargs):
+
+        if self.is_published and not self.dt_published:
+            self.dt_published = timezone.now()
+
+        super().save(*args, **kwargs)
+
+    # From Abstract:  title
+    # From related: children
+
+    site = models.ForeignKey(
+        Site, on_delete=models.CASCADE,
+        related_name='pages')
+    # user = models.ForeignKey(
+    #     User, on_delete=models.CASCADE,
+    #     related_name='pages')
+
+    parent = models.ForeignKey(
+        'self', on_delete=models.CASCADE, related_name='children',
+        blank=True, null=True)
+
+    # TODO: Idea: Linked list
     sections = models.ManyToManyField(
         'miq.Section', blank=True,
         through='PageSectionMeta',
         related_name='pages'
     )
+
+    # MUST BE the same as related name
+    source = models.CharField(max_length=100, blank=True, null=True)
 
     label = models.CharField(max_length=100, help_text=_('Page header label'))
     slug = models.SlugField(
@@ -106,15 +134,9 @@ class Page(AbstractPage):
 
     objects = PageManager()
 
-    def __str__(self):
-        return f'{self.site.name} {self.label} page'
-
-    def save(self, *args, **kwargs):
-
-        if self.is_published and not self.dt_published:
-            self.dt_published = timezone.now()
-
-        super().save(*args, **kwargs)
+    @property
+    def updated_since(self):
+        return timesince(self.updated)
 
     @property
     def detail_url(self):
@@ -130,6 +152,9 @@ class Page(AbstractPage):
                     pass
 
         return
+
+    def has_children(self):
+        return self.children.exists()
 
     def publish(self):
         self.is_published = True

@@ -5,11 +5,14 @@ from django.contrib.sites.models import Site
 from miq.mixins import DevLoginRequiredMixin
 from django.contrib.sites.shortcuts import get_current_site
 # from django.contrib.auth.mixins import LoginRequiredMixin
-# from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from rest_framework import serializers
 
-from miq.views.generic import TemplateView
+from miq.models import (Page)
+from grio.serializers import PageSerializer
+
+from miq.views.generic import ListView, TemplateView
 
 
 class AdminSiteSerializer(serializers.ModelSerializer):
@@ -25,9 +28,15 @@ class AdminSiteSerializer(serializers.ModelSerializer):
         ]
 
 
-class AdminView(DevLoginRequiredMixin, TemplateView):
+class ViewMixin(DevLoginRequiredMixin):
     template_name = 'grio/base.html'
-    # permission_required = ''
+
+    def dispatch(self, request, *args, **kwargs):
+        from django.urls import reverse_lazy
+
+        print(reverse_lazy('grio:page-list'))
+        print('ok=================>')
+        return super().dispatch(request, *args, **kwargs)
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -42,13 +51,26 @@ class AdminView(DevLoginRequiredMixin, TemplateView):
         return context
 
 
-class AdminPagesView(AdminView):
+class AdminView(ViewMixin, TemplateView):
+    pass
+    # permission_required = ''
+
+
+class AdminPagesView(ViewMixin, PermissionRequiredMixin, ListView):
+    queryset = Page.objects.parents()
+    paginate_by = 16
+    permission_required = 'miq.view_page'
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
+        data = {}
 
-        data = {
-            'pages': ['all']
-        }
+        pages = context.get('object_list')
+        # print('HEHHE', pages.exists())
+        if pages:
+            data['pages'] = PageSerializer(pages, many=True).data
+        else:
+            data['pages'] = []
 
         self.update_sharedData(context, data)
 

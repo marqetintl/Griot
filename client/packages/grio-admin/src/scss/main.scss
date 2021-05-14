@@ -1,7 +1,21 @@
 @use './dashboard';
 @use './main-sidebar';
+@use './view';
 
 @import "./mixins";
+
+.IconButton {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    background-color: transparent;
+    border: 1px solid transparent;
+    .Icon {
+    }
+
+    .Label {
+    }
+}
 
 #Grio {
     display: flex;
@@ -29,13 +43,14 @@
         position: relative;
         flex-direction: column;
         overflow-y: auto;
-        overflow-x: hidden;
+        // overflow-x: hidden;
 
         .container {
-            max-width: 1600px;
-            width: 100%;
+            flex-grow: 1;
+            // max-width: 1600px;
+            // width: 100%;
             position: relative;
-            margin: 0 auto;
+            // margin: 0 auto;
             padding: 0 1rem;
         }
     }

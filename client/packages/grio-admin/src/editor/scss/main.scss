@@ -1,0 +1,76 @@
+$editor-header-height: 36px;
+
+.editor {
+    flex-grow: 1;
+    max-height: 100%;
+
+    &-label {
+        display: flex;
+        margin-bottom: 2rem;
+
+        // textarea {
+        //     resize: none;
+        //     height: 50px;
+        //     max-width: 800px;
+        //     width: 100%;
+        //     min-height: auto;
+        //     font-size: 2rem;
+        //     line-height: 1.5rem;
+        //     font-weight: 600;
+        //     overflow: hidden;
+
+        //     margin: 0 auto;
+        //     box-shadow: none;
+        //     border: none;
+
+        //     &:focus {
+        //         box-shadow: none;
+        //         border: none;
+        //         outline: none;
+        //     }
+        // }
+    }
+
+    &-panel {
+        position: relative;
+        overflow-y: auto;
+        overflow-x: hidden;
+        height: 100vh;
+        width: 100%;
+    }
+
+    &-content {
+        display: flex;
+        flex-direction: column;
+        padding: 10vw 50px;
+        min-height: 100%;
+    }
+
+    .view {
+        flex-grow: 1;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        overflow-x: hidden;
+
+        &-header {
+            position: fixed;
+            // top: 0;
+            left: 0;
+            right: 0;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            // height: $editor-header-height;
+            z-index: 800;
+            margin: 25px;
+        }
+        &-content {
+            width: 100%;
+            flex-grow: 1;
+            position: relative;
+        }
+    }
+}

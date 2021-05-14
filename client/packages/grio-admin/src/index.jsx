@@ -1,95 +1,50 @@
+import thunk from "redux-thunk";
+import { lazy, Suspense } from "react";
 import { Route, Switch } from "react-router-dom";
-import { House, Gear, Files, Bookmark, PersonBadge } from "react-bootstrap-icons";
-
-import { SharedDataProvider, SharedDataCtx, IconNavLink } from "@miq/shared";
+import { Provider as ReduxProvider } from "react-redux";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
 
 import "./scss/main.scss";
 
-import { lazy, Suspense, useContext } from "react";
+import { SharedDataProvider, IS_DEV } from "@miq/shared";
 
-const PagesLayout = lazy(() => import("./pages"));
-const Fallback = (props) => <div>Loading ...</div>;
+import { EDITOR_PATH } from "./editor";
+import AdminView from "./AdminView";
+import { pagesReducer } from "./pages/utils";
 
-const AdminView = (props) => {
-    const ctx = useContext(SharedDataCtx);
-    const { path } = props.match;
+export const initialState = {};
 
-    if (!ctx) return null;
-    if (!ctx.isLoaded) return <Fallback />;
+const reducers = { pages: pagesReducer };
 
-    return (
-        <div id="AdminView">
-            <NavBar {...props} {...{ path, ctx }} />
+const EditorLayout = lazy(() => import("./editor"));
+export const Fallback = (props) => <div>Loading ...</div>;
 
-            <main className="grio-main" role="main">
-                <section className="container">
-                    <Suspense fallback={<Fallback />}>
-                        <Switch>
-                            <Route path={`${path}pages/`} component={PagesLayout} />
-                            <Route path={`${path}settings/`} component={Settings} />
-                            <Route path={`${path}`} component={Dashboard} />
-                        </Switch>
-                    </Suspense>
-                </section>
-            </main>
+const storeReducer = combineReducers({ ...reducers });
 
-            <MobileNav />
-        </div>
-    );
-};
+const middleware = [thunk];
+let enhancers = [applyMiddleware(...middleware)];
+if (IS_DEV) {
+    enhancers = [
+        ...enhancers,
+        window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
+    ];
+}
+
+const reduxStore = createStore(storeReducer, initialState, compose(...enhancers));
 
 export default function Grio(props) {
     return (
         <SharedDataProvider>
-            <div id="Grio">
-                <AdminView {...props} />
-            </div>
+            <ReduxProvider store={reduxStore}>
+                <div id="Grio">
+                    <Suspense fallback={<Fallback />}>
+                        <Switch>
+                            <Route path={`${EDITOR_PATH}`} component={EditorLayout} />
+                            <Route component={AdminView} />
+                        </Switch>
+                    </Suspense>
+                </div>
+            </ReduxProvider>
         </SharedDataProvider>
     );
 }
-
-const Dashboard = (props) => {
-    return <div className="">Dashboard</div>;
-};
-
-const Settings = (props) => {
-    return <div className="">Settings</div>;
-};
-
-const NavBar = (props) => {
-    const { path } = props;
-    return (
-        <nav id="AdminNav" className="grio-nav">
-            <header className="grio-nav-header">Header</header>
-
-            <section className="grio-nav-body">
-                <div className="grio-nav-content">
-                    <NavItem exact to={"/grio/"} label="Dashboard" Icon={House} />
-
-                    <div className="grio-nav-items">
-                        <NavItem to={`${path}blog`} label="Articles" Icon={Bookmark} />
-                    </div>
-
-                    <NavItem to={`${path}pages/`} label="Pages" Icon={Files} />
-                    <NavItem to={`${path}staff/`} label="Staff" Icon={PersonBadge} />
-                </div>
-
-                <div className="grio-nav-footer">
-                    <NavItem to={`${path}settings/`} label="Settings" Icon={Gear} />
-                </div>
-            </section>
-        </nav>
-    );
-};
-
-const NavItem = (props) => {
-    return (
-        <div className="grio-nav-item">
-            <IconNavLink {...props} className="grio-nav-link" />
-        </div>
-    );
-};
-
-const MobileNav = (props) => {
-    return <nav className="grio-mobile-nav">Mobile</nav>;
-};

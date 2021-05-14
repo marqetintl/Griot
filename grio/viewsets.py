@@ -6,6 +6,7 @@ from rest_framework.parsers import JSONParser
 from rest_framework.serializers import ValidationError
 
 from miq.models import Section, Page, Index
+from miq.mixins import DevLoginRequiredMixin
 from .serializers import (
     SectionSerializer,
     ImageSectionSerializer,
@@ -51,7 +52,7 @@ class SectionViewset(viewsets.ModelViewSet):
         return super().get_serializer_class()
 
 
-class PagesActionMixin:
+class PagesActionMixin(DevLoginRequiredMixin):
     @action(methods=['post'], detail=True, url_path=r'section')
     def section(self, request, *args, **kwargs):
         data = request.data
@@ -75,6 +76,13 @@ class PageViewset(PagesActionMixin, viewsets.ModelViewSet):
 
     def perform_create(self, serializer):
         serializer.save(site=get_current_site(self.request))
+
+    def get_queryset(self):
+        qs = super().get_queryset()
+        if self.action == 'list':
+            return qs.parents()
+
+        return qs
 
 
 class IndexViewset(PagesActionMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):

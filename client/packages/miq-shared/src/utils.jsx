@@ -64,3 +64,9 @@ export const getClassName = (df = []) => {
     }
     return className;
 };
+
+export const addForwardSlash = (str = isRequired("string param")) => (str.endsWith("/") ? str : `${str}/`);
+
+export const isRequired = (name = "Param") => {
+    throw new Error(`${name} is required`);
+};
