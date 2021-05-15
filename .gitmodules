@@ -1,0 +1,3 @@
+[submodule "client/packages/miq-shared"]
+	path = client/packages/miq-shared
+	url = https://github.com/marqetintl/miq-shared.git
