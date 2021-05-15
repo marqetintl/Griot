@@ -1,1 +1,1 @@
-# Griot Shared Components
+# React Shared Components
