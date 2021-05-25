@@ -22,7 +22,7 @@ sections_serializer_classes = {
 }
 
 
-class SectionViewset(viewsets.ModelViewSet):
+class SectionViewset(DevLoginRequiredMixin, viewsets.ModelViewSet):
     lookup_field = 'slug'
     serializer_class = SectionSerializer
     queryset = Section.objects.all()

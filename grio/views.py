@@ -31,13 +31,6 @@ class AdminSiteSerializer(serializers.ModelSerializer):
 class ViewMixin(DevLoginRequiredMixin):
     template_name = 'grio/base.html'
 
-    def dispatch(self, request, *args, **kwargs):
-        from django.urls import reverse_lazy
-
-        print(reverse_lazy('grio:page-list'))
-        print('ok=================>')
-        return super().dispatch(request, *args, **kwargs)
-
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         site = get_current_site(self.request)
