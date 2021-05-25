@@ -1,13 +1,30 @@
 from django.db import models
+from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
-from django.contrib.sites.models import Site as DjangoSite
+from django.contrib.sites.models import Site as DjangoSite, SiteManager as DjangoSiteManager
 
 from miq.models.mixins import BaseModelMixin
 
 
-class Site(DjangoSite):
+User = get_user_model()
+
+
+class SiteManager(DjangoSiteManager):
+    pass
+
+
+class Site(BaseModelMixin, DjangoSite):
+
+    user = models.ForeignKey(
+        User, on_delete=models.CASCADE,
+        related_name='sites')
+
+    objects = SiteManager()
+
     class Meta(DjangoSite.Meta):
-        proxy = True
+        verbose_name = _('Site')
+        verbose_name_plural = _('Sites')
+        ordering = ['domain']
 
 
 class Navbar(BaseModelMixin):
@@ -20,6 +37,6 @@ class Navbar(BaseModelMixin):
         return f'{self.site} Navbar'
 
     site = models.OneToOneField(
-        Site, on_delete=models.CASCADE,
+        'miq.Site', on_delete=models.CASCADE,
         related_name='navbar',
     )
