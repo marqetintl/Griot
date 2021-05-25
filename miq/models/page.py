@@ -178,5 +178,12 @@ class PageSectionMeta(BaseModelMixin):
         'miq.Section', on_delete=models.CASCADE,
     )
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if self.section and self.page and self.section.source != self.page.slug:
+            self.section.source = self.page.slug
+            self.section.save()
+
     def __str__(self):
         return f'{self.page}, section[{self.section}] {self.section.position}'
