@@ -1,12 +1,9 @@
 {
     "private": true,
     "name": "@miq/griot",
-    "workspaces": [
-        "packages/*"
-    ],
     "scripts": {
-        "start": "cd packages/grio-app && yarn start",
-        "build": "cd packages/grio-app && yarn build"
+        "start": "yarn workspace @grio/app start",
+        "build": "yarn workspace @grio/app build"
     },
     "dependencies": {
         "lodash": "^4.17.21",
