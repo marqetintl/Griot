@@ -1,5 +1,6 @@
 
 from django.db import models
+from django.contrib.sites.models import Site
 from django.utils.translation import gettext_lazy as _
 
 from .mixins import BaseModelMixin
@@ -58,6 +59,10 @@ class Section(SectionAbstract):
 
     # From Abstract: title, text, url
 
+    site = models.ForeignKey(
+        Site, on_delete=models.CASCADE,
+        related_name='sections')
+
     # Used to group sections
     source = models.SlugField(
         max_length=100, db_index=True,
@@ -91,7 +96,8 @@ class SectionImageMeta(SectionAbstract):
     # From Abstract: title, text, url
 
     section = models.ForeignKey('miq.Section', on_delete=models.CASCADE)
-    img = models.ForeignKey('miq.Image', on_delete=models.CASCADE)
+    img = models.ForeignKey(
+        'miq.Image', on_delete=models.CASCADE, related_name='meta')
 
 
 # PROXIES

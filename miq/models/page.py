@@ -9,6 +9,7 @@ from django.utils.translation import gettext_lazy as _
 
 from miq.models.mixins import BaseModelMixin
 
+
 __all__ = ['Index', 'Page', 'PageSectionMeta']
 
 
@@ -92,6 +93,9 @@ class Page(AbstractPage):
 
     def save(self, *args, **kwargs):
 
+        if not self.slug_pk:
+            self.slug_pk = uuid4()
+
         if self.is_published and not self.dt_published:
             self.dt_published = timezone.now()
 
@@ -103,9 +107,6 @@ class Page(AbstractPage):
     site = models.ForeignKey(
         Site, on_delete=models.CASCADE,
         related_name='pages')
-    # user = models.ForeignKey(
-    #     User, on_delete=models.CASCADE,
-    #     related_name='pages')
 
     parent = models.ForeignKey(
         'self', on_delete=models.CASCADE, related_name='children',
@@ -125,6 +126,12 @@ class Page(AbstractPage):
     slug = models.SlugField(
         max_length=200, db_index=True, unique=True,
         default=uuid4
+    )
+
+    # For internal and system use
+    slug_pk = models.SlugField(
+        max_length=100, unique=True, db_index=True,
+        editable=False, null=True,
     )
 
     is_published = models.BooleanField(
