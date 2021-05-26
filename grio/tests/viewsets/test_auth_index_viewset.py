@@ -6,16 +6,16 @@ from rest_framework.test import APITestCase
 from miq.models import Index
 from miq.models.section import Section
 
-from miq.tests.mixins import UserMixin, SiteMixin
+from miq.tests.mixins import TestMixin
 
 path = reverse_lazy('grio:index-detail', args=['current'])
 
 
-class Mixin(SiteMixin, UserMixin):
+class Mixin(TestMixin):
     pass
 
 
-class TestPageViewset(Mixin, APITestCase):
+class TestIndexViewset(Mixin, APITestCase):
     def setUp(self) -> None:
         super().setUp()
 
@@ -30,7 +30,7 @@ class TestPageViewset(Mixin, APITestCase):
         path = reverse_lazy('grio:index-section', args=['current'])
 
         # Add section
-        section_slug = Section.objects.create().slug
+        section_slug = Section.objects.create(site=self.site).slug
         r = self.client.post(
             path, data={'slug': section_slug}, format='json')
         self.assertEqual(r.status_code, status.HTTP_200_OK)
@@ -48,7 +48,7 @@ class TestPageViewset(Mixin, APITestCase):
         self.assertEqual(r.data.get('count'), 1)
 
     def test_sections_is_readonly(self):
-        section = Section.objects.create()
+        section = Section.objects.create(site=self.site)
 
         r = self.client.patch(
             path, data={'sections': [section.slug]}, format='json')
@@ -67,4 +67,5 @@ class TestPageViewset(Mixin, APITestCase):
         self.client.logout()
 
         r = self.client.get(path)
-        self.assertEqual(r.status_code, status.HTTP_403_FORBIDDEN)
+        # self.assertEqual(r.status_code, status.HTTP_403_FORBIDDEN)
+        self.assertEqual(r.status_code, status.HTTP_302_FOUND)

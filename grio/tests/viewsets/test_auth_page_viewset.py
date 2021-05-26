@@ -1,5 +1,6 @@
 from django.urls import reverse_lazy
 
+from rest_framework import status
 from rest_framework.test import APITestCase
 
 from miq.models import Page
@@ -35,13 +36,13 @@ class TestPageViewset(Mixin, APITestCase):
 
         # No slug
         r = self.client.post(path, data={}, format='json')
-        self.assertEqual(r.status_code, 400)
+        self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
 
         # Add section
-        section_slug = Section.objects.create().slug
+        section_slug = Section.objects.create(site=self.site).slug
         r = self.client.post(
             path, data={'slug': section_slug}, format='json')
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertIn(f'{section_slug}', r.data.get('sections'))
 
         # update_sections_source
@@ -58,11 +59,11 @@ class TestPageViewset(Mixin, APITestCase):
             label='Section test page', site=self.site).slug
         path = self.get_detail_path(slug)
 
-        section = Section.objects.create()
+        section = Section.objects.create(site=self.site)
 
         r = self.client.patch(
             path, data={'sections': [section.slug]}, format='json')
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.data.get('sections')), 0)
 
     def test_partial_update(self):
@@ -73,7 +74,7 @@ class TestPageViewset(Mixin, APITestCase):
         r = self.client.patch(
             path, data={'label': label}, format='json')
 
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
         page = Page.objects.draft().get(slug=slug)
         self.assertEqual(page.label, label)
 
@@ -83,22 +84,23 @@ class TestPageViewset(Mixin, APITestCase):
 
     def test_create(self):
         r = self.client.post(list_path, data={}, format='json')
-        self.assertEqual(r.status_code, 400)
+        self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
 
         r = self.client.post(
             list_path, data={'label': 'page label'}, format='json')
-        self.assertEqual(r.status_code, 201)
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
 
         self.assertFalse(r.data.get('is_published'))
 
     def test_list(self):
         Page.objects.create(label='Page', site=self.site)
         r = self.client.get(list_path)
-        self.assertEqual(r.status_code, 200)
+        self.assertEqual(r.status_code, status.HTTP_200_OK)
         self.assertEqual(len(r.data.get('results')), 1)
 
     def test_user_not_auth(self):
         self.client.logout()
 
         r = self.client.get(list_path)
-        self.assertEqual(r.status_code, 403)
+        # self.assertEqual(r.status_code, 403)
+        self.assertEqual(r.status_code, status.HTTP_302_FOUND)
