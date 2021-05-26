@@ -2,18 +2,40 @@ from django.contrib.sites.shortcuts import get_current_site
 
 from rest_framework import viewsets, mixins
 from rest_framework.decorators import action
-from rest_framework.parsers import JSONParser
+from rest_framework.parsers import JSONParser, MultiPartParser
 from rest_framework.serializers import ValidationError
 
-from miq.models import Section, Page, Index
+from miq.models import Section, Page, Index, Image
 from miq.mixins import DevLoginRequiredMixin
 from .serializers import (
-    SectionSerializer,
+    SectionSerializer, ImageSerializer,
     ImageSectionSerializer,
     TextSectionSerializer, MarkdownSectionSerializer,
     PageSerializer, IndexSerializer
 )
 
+"""
+IMAGE
+"""
+
+
+class ImageViewset(DevLoginRequiredMixin, viewsets.ModelViewSet):
+    lookup_field = 'slug'
+    serializer_class = ImageSerializer
+    queryset = Image.objects.none()
+    parser_classes = (JSONParser,  MultiPartParser)
+
+    def get_queryset(self):
+        qs = Image.objects.active().site(get_current_site(self.request))
+        return qs
+
+    def perform_create(self, ser):
+        ser.save(site=get_current_site(self.request), user=self.request.user)
+
+
+"""
+SECTION
+"""
 
 sections_serializer_classes = {
     'IMG': ImageSectionSerializer,
@@ -51,6 +73,15 @@ class SectionViewset(DevLoginRequiredMixin, viewsets.ModelViewSet):
 
         return super().get_serializer_class()
 
+    def perform_create(self, serializer):
+        # TODO: Enforce
+        serializer.save(site=get_current_site(self.request))
+
+
+"""
+PAGE
+"""
+
 
 class PagesActionMixin(DevLoginRequiredMixin):
     @action(methods=['post'], detail=True, url_path=r'section')
@@ -75,6 +106,7 @@ class PageViewset(PagesActionMixin, viewsets.ModelViewSet):
     parser_classes = (JSONParser, )
 
     def perform_create(self, serializer):
+        # TODO: Enforce
         serializer.save(site=get_current_site(self.request))
 
     def get_queryset(self):
@@ -83,6 +115,11 @@ class PageViewset(PagesActionMixin, viewsets.ModelViewSet):
             return qs.parents()
 
         return qs
+
+
+"""
+INDEX PAGE
+"""
 
 
 class IndexViewset(PagesActionMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
