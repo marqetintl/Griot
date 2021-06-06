@@ -18,7 +18,7 @@ export default function PagesLayout(props) {
     const pages = useSelector((state) => state.pages);
 
     useEffect(() => {
-        dispatch(pagesActions.list());
+        pagesActions.list();
     }, [dispatch]);
 
     return (

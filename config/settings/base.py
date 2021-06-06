@@ -21,7 +21,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 TEMPLATES_DIR = BASE_DIR / 'templates'
 CLIENT_DIR = BASE_DIR / 'client'
-BUILD_DIR = CLIENT_DIR / 'packages/griot-app/build'
+BUILD_DIR = CLIENT_DIR / 'grio-app/build'
 
 CORS_ORIGIN = None
 

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { DOMAIN } from "@miq/utils";
 
 export const ENDPOINT = `${DOMAIN}${process.env.REACT_APP_API_ENDPOINT}`;
@@ -16,5 +17,5 @@ export const API = axios.create({
     headers: {
         "Content-type": "application/json",
     },
-    onUploadProgress: (progressEvt) => {},
+    // onUploadProgress: (progressEvt) => {},
 });

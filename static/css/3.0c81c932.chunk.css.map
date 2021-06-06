@@ -1,0 +1,1 @@
+{"version":3,"sources":["webpack://../grio-admin/src/pages/scss/main.scss"],"names":[],"mappings":"AAAA,WACI,eAAA,CACA,SAAA","file":"3.0c81c932.chunk.css","sourcesContent":[".page-list {\n    list-style: none;\n    padding: 0;\n\n    // &-item {\n    // }\n}\n"]}

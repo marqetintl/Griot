@@ -1,8 +1,9 @@
 from django.contrib.sites.shortcuts import get_current_site
 
-from rest_framework import viewsets, mixins
+from rest_framework import status, viewsets, mixins
 from rest_framework.decorators import action
 from rest_framework.parsers import JSONParser, MultiPartParser
+from rest_framework.response import Response
 from rest_framework.serializers import ValidationError
 
 from miq.models import Section, Page, Index, Image
@@ -77,6 +78,9 @@ class SectionViewset(DevLoginRequiredMixin, viewsets.ModelViewSet):
         # TODO: Enforce
         serializer.save(site=get_current_site(self.request))
 
+    def create(self, request, *args, **kwargs):
+        return super().create(request, *args, **kwargs)
+
 
 """
 PAGE
@@ -86,17 +90,19 @@ PAGE
 class PagesActionMixin(DevLoginRequiredMixin):
     @action(methods=['post'], detail=True, url_path=r'section')
     def section(self, request, *args, **kwargs):
-        data = request.data
+        """
+        Add section to page
+        """
+
         instance = self.get_object()
 
-        section = Section.objects.filter(slug=data.get('slug')).first()
-        if not section:
-            raise ValidationError({'slug': 'Invalid slug.'})
+        serializer = SectionSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
 
+        section = serializer.save(site=instance.site, source=instance.slug)
         instance.sections.add(section)
-        instance.update_sections_source()
 
-        return self.retrieve(request, *args, **kwargs)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
 
 
 class PageViewset(PagesActionMixin, viewsets.ModelViewSet):

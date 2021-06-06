@@ -3,7 +3,8 @@
     "name": "@miq/griot",
     "scripts": {
         "start": "yarn workspace @grio/app start",
-        "build": "yarn workspace @grio/app build"
+        "build": "cd grio-app && yarn build",
+        "build:w": "yarn workspace @grio/app build"
     },
     "dependencies": {
         "lodash": "^4.17.21",

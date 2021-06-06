@@ -4,9 +4,9 @@
     "private": true,
     "main": "./src/index.jsx",
     "dependencies": {
-        "@miq/form": "1.0.0",
-        "@miq/utils": "1.0.0",
-        "@miq/components": "1.0.0",
+        "@miq/components": "workspace:*",
+        "@miq/form": "workspace:*",
+        "@miq/utils": "workspace:*",
         "@testing-library/jest-dom": "^5.11.4",
         "@testing-library/react": "^11.1.0",
         "@testing-library/user-event": "^12.1.10",

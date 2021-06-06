@@ -1,29 +1,29 @@
+import actions from "../actions";
 import { PAGE_CREATE_PATH } from "../editor";
-import { API } from "../utils";
 
 const initialState = { results: [], items: {} };
 
 export const pagesActions = {
-    list:
-        (path = "pages/", params) =>
-        (dispatch) =>
-            new Promise((resolve, reject) => {
-                API.get(path, { params })
-                    .then(({ data }) => {
-                        dispatch({ type: "SET_PAGES", payload: data });
-                        resolve(data);
-                    })
-                    .catch((err) => reject(err));
-            }),
-    get: (pageSlug) => (dispatch) =>
-        new Promise((resolve, reject) => {
-            API.get(`pages/${pageSlug}/`)
-                .then(({ data }) => {
-                    dispatch({ type: "ADD_UPDATE_PAGE", payload: data });
-                    resolve(data);
-                })
-                .catch((err) => reject(err));
-        }),
+    path: "pages/",
+
+    list(params) {
+        return actions.get(this.path, params, "SET_PAGES");
+    },
+    get(pageSlug, params) {
+        return actions.get(`${this.path}${pageSlug}/`, params, "ADD_UPDATE_PAGE");
+    },
+    post(values) {
+        return actions.post(`${this.path}`, values, "ADD_UPDATE_PAGE");
+    },
+    patch(pageSlug, values, oldValues) {
+        return actions.patch(`${this.path}${pageSlug}/`, values, oldValues);
+    },
+    postSection(pageSlug, values) {
+        return actions.post(`${this.path}${pageSlug}/section/`, values, "APPEND_SECTION");
+    },
+    delete(pageSlug) {
+        return actions.delete(`${this.path}${pageSlug}/`, pageSlug, "REMOVE_PAGE");
+    },
 };
 
 export const pagesReducer = (state = initialState, action) => {
@@ -47,6 +47,11 @@ export const pagesReducer = (state = initialState, action) => {
 
         case "ADD_UPDATE_PAGE":
             items = { ...state.items, [payload.slug]: payload };
+            return { ...state, items };
+
+        case "REMOVE_PAGE":
+            items = state.items;
+            delete items[payload.slug];
             return { ...state, items };
 
         default:

@@ -35,6 +35,9 @@ class SiteMixin:
     def site(self):
         return Site.objects.first()
 
+    def create_site(self):
+        return Site.objects.create()
+
 
 class TestMixin(SiteMixin, UserMixin):
     pass

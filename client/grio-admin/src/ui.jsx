@@ -9,7 +9,7 @@ export const ViewLayout = ({ children, ...props }) => {
                 <div className="view-header-inner">
                     <h2 className="view-title">{title}</h2>
 
-                    {actions && <section className="view-actions"></section>}
+                    {actions && <section className="view-actions">{actions}</section>}
                 </div>
             </header>
 

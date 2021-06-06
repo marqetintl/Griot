@@ -1,60 +1,12 @@
-import { isRequired } from "@miq/utils";
-import { isEqual } from "lodash";
-import { API } from "../../utils";
+import actions from "../../actions";
 
-export const patchAction = (
-    request = isRequired("request required: [HTTP, AUTH, API]"),
-    path = isRequired("path"),
-    values = isRequired("values"),
-    oldValues,
-    dispatch,
-    type
-) =>
-    new Promise((resolve, reject) => {
-        if (oldValues && isEqual(values, oldValues)) {
-            return resolve({ isUpdated: false });
-        }
-
-        request
-            .patch(path, values)
-            .then(({ data }) => {
-                if (dispatch && type) {
-                    dispatch({ type, payload: data });
-                }
-
-                resolve({ ...data, isUpdated: true });
-            })
-            .catch((err) => {
-                reject(err);
-            });
-    });
-
-export const deleteAction = (
-    request = isRequired("request required: [HTTP, AUTH, API]"),
-    path = isRequired("path"),
-    slug = isRequired("slug"),
-    dispatch,
-    type
-) =>
-    new Promise((resolve, reject) =>
-        request
-            .delete(path)
-            .then(({ status }) => {
-                if (status === 204 && dispatch && type) {
-                    dispatch({ type, payload: { slug } });
-                }
-
-                resolve({ deleted: true });
-            })
-            .catch((err) => {
-                reject(err);
-            })
-    );
-
-export function arrAddOrUpdateObject(arr, obj, key = "slug") {
+export function arrAddOrUpdateObject(arr, obj, key = "slug", append = false) {
     const arrKey = arr.map((i) => i[key]);
 
-    if (!arrKey.includes(obj[key])) return [obj, ...arr];
+    if (!arrKey.includes(obj[key])) {
+        if (append) return [...arr, obj];
+        return [obj, ...arr];
+    }
 
     return arr.map((i) => {
         if (i[key] === obj[key]) return obj;
@@ -62,22 +14,23 @@ export function arrAddOrUpdateObject(arr, obj, key = "slug") {
     });
 }
 
-const sectEndpoint = `sections/`;
-
+const path = `sections/`;
 export const sectionActions = {
-    list: (params) => (dispatch) =>
-        new Promise((resolve, reject) => {
-            API.get(sectEndpoint, { params })
-                .then(({ data }) => {
-                    dispatch({ type: "SET_SECTIONS", payload: data });
-                    resolve(data);
-                })
-                .catch((err) => reject(err));
-        }),
-    patch: (sectSlug, values, oldValues) => (dispatch) =>
-        patchAction(API, `${sectEndpoint}${sectSlug}/`, values, oldValues, dispatch, `ADD_UPDATE_SECTION`),
-    delete: (sectSlug) => (dispatch) =>
-        deleteAction(API, `${sectEndpoint}${sectSlug}/`, sectSlug, dispatch, `REMOVE_SECTION`),
+    list(params) {
+        return actions.get(path, params, "SET_SECTIONS");
+    },
+    get(sectSlug, params, type = "PREPEND_SECTION") {
+        return actions.get(`${path}${sectSlug}/`, params, type);
+    },
+    post(values, type = "PREPEND_SECTION") {
+        return actions.post(`${path}`, values, type);
+    },
+    patch(sectSlug, values, oldValues) {
+        return actions.patch(`${path}${sectSlug}/`, values, oldValues, "UPDATE_SECTION");
+    },
+    delete(sectSlug) {
+        return actions.delete(`${path}${sectSlug}/`, sectSlug, "REMOVE_SECTION");
+    },
 };
 
 const initialState = { sections: { results: [] } };
@@ -90,7 +43,15 @@ export const sectionsReducer = (state = initialState.sections, action) => {
         case "SET_SECTIONS":
             return { ...payload };
 
-        case "ADD_UPDATE_SECTION":
+        case "APPEND_SECTION":
+            results = arrAddOrUpdateObject(state.results, payload, "slug", true);
+            return { ...state, results };
+
+        case "PREPEND_SECTION":
+            results = arrAddOrUpdateObject(state.results, payload);
+            return { ...state, results };
+
+        case "UPDATE_SECTION":
             results = arrAddOrUpdateObject(state.results, payload);
             return { ...state, results };
 

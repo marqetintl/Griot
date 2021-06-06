@@ -36,23 +36,22 @@ class TestPageViewset(Mixin, APITestCase):
 
         # No slug
         r = self.client.post(path, data={}, format='json')
-        self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
+        # Adds text section
+        # self.assertEqual(r.status_code, status.HTTP_400_BAD_REQUEST)
 
         # Add section
-        section_slug = Section.objects.create(site=self.site).slug
-        r = self.client.post(
-            path, data={'slug': section_slug}, format='json')
-        self.assertEqual(r.status_code, status.HTTP_200_OK)
-        self.assertIn(f'{section_slug}', r.data.get('sections'))
+        r = self.client.post(path, data={'type': "MD"}, format='json')
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
+        # self.assertIn(f'{section_slug}', r.data.get('sections'))
 
         # update_sections_source
-        section = Page.objects.get(slug=slug).sections.get(slug=section_slug)
-        self.assertEqual(section.source, f'{slug}')
+        # section = Page.objects.get(slug=slug).sections.get(slug=section_slug)
+        # self.assertEqual(section.source, f'{slug}')
 
         # Retriev page sections
         section_list_path = reverse_lazy('grio:section-list')
         r = self.client.get(section_list_path, {'source': slug})
-        self.assertEqual(r.data.get('count'), 1)
+        self.assertEqual(r.data.get('count'), 2)
 
     def test_sections_is_readonly(self):
         slug = Page.objects.create(

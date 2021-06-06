@@ -14,13 +14,22 @@ class Command(BaseCommand):
     help = 'Collect React index.html and static files'
 
     def handle(self, *args, **kwargs):
+
+        # print(settings.BUILD_DIR, '\n')
+
+        # if not os.path.isdir(settings.BUILD_DIR):
+        #     raise Exception('No build directory')
+
         client_dir = getattr(settings, 'CLIENT_DIR', 'client')
-        if not os.path.exists(client_dir):
+        if not os.path.isdir(client_dir):
             self.stdout.write(self.style.ERROR(f'No client directory found'))
             return
 
         self.stdout.write('Building client app ...')
         subprocess.run(['yarn', 'build'], cwd=client_dir)
+
+        if not os.path.isdir(settings.BUILD_DIR):
+            raise Exception('No build directory')
 
         self.stdout.write('Collecting static files ...')
         call_command(

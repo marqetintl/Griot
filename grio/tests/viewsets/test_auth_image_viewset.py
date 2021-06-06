@@ -6,7 +6,7 @@ from rest_framework import status
 from rest_framework.test import APITestCase
 
 from miq.models import Image
-from grio.tests.utils import get_temp_img
+from miq.tests.utils import get_temp_img
 
 from miq.tests.mixins import TestMixin
 
@@ -50,6 +50,8 @@ class TestSectionViewset(Mixin, APITestCase):
 
         self.assertEqual(image.site, self.site)
         self.assertEqual(image.user.username, self.username)
+
+    # test_src_required
 
     def test_list(self):
         r = self.client.get(list_path)

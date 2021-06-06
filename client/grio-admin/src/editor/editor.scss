@@ -5,6 +5,9 @@ $editor-header-height: 36px;
     max-height: 100%;
 
     &-sections {
+        padding-bottom: 2rem;
+    }
+    &-actions {
         padding-bottom: 10vw;
     }
 
@@ -73,7 +76,7 @@ $editor-header-height: 36px;
         margin: 25px;
     }
     &-content {
-        width: 100%;
+        // width: 100%;
         flex-grow: 1;
         position: relative;
     }

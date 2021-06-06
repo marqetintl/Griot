@@ -30,17 +30,10 @@ class TestIndexViewset(Mixin, APITestCase):
         path = reverse_lazy('grio:index-section', args=['current'])
 
         # Add section
-        section_slug = Section.objects.create(site=self.site).slug
-        r = self.client.post(
-            path, data={'slug': section_slug}, format='json')
-        self.assertEqual(r.status_code, status.HTTP_200_OK)
-        self.assertIn(f'{section_slug}', r.data.get('sections'))
+        r = self.client.post(path, data={}, format='json')
+        self.assertEqual(r.status_code, status.HTTP_201_CREATED)
 
         index = self.site.index
-
-        # update_sections_source
-        section = index.sections.get(slug=section_slug)
-        self.assertEqual(section.source, f'{index.slug}')
 
         # Retriev page sections
         section_list_path = reverse_lazy('grio:section-list')

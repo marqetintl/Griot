@@ -38,7 +38,7 @@ class TestSectionViewset(Mixin, APITestCase):
 
         # TODO: IMAGE
 
-    def test_partial_update_no_type(self):
+    def test_partial_update_request_has_no_type(self):
         section = Section.objects.create(site=self.site)
         path = reverse_lazy('grio:section-detail', args=[section.slug])
         r = self.client.patch(path, data={}, format='json')
