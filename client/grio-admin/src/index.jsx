@@ -29,7 +29,7 @@ if (IS_DEV) {
     enhancers = [...enhancers, window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f];
 }
 
-const reduxStore = createStore(storeReducer, initialState, compose(...enhancers));
+export const reduxStore = createStore(storeReducer, initialState, compose(...enhancers));
 
 export default function Grio(props) {
     return (

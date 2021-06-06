@@ -36,10 +36,7 @@ export default function Section(props) {
     const dispatch = useDispatch();
 
     const context = useMemo(() => {
-        const update = (sectSlug, values, oldValues) => dispatch(sectionActions.patch(sectSlug, values, oldValues));
-        const remove = (slug) => dispatch(sectionActions.delete(slug));
-
-        return { isEdit, setEdit, update, remove, dispatch };
+        return { isEdit, setEdit, update: sectionActions.patch, remove: sectionActions.delete, dispatch };
     }, [isEdit, dispatch]);
 
     if (!slug) return null;

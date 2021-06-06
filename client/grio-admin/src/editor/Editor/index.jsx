@@ -4,10 +4,11 @@ import PropTypes from "prop-types";
 import Form, { useForm } from "@miq/form";
 import { isRequired } from "@miq/utils";
 import Section from "../Section";
-import { pagesActions } from "../../pages/utils";
 
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { sectionActions } from "../Section/utils";
+import { useState } from "react";
+import { SectionAddButton } from "../Section/section-components";
 
 const propTypes = {
     sourceSlug: PropTypes.string.isRequired,
@@ -16,20 +17,20 @@ const propTypes = {
 };
 
 export default function Editor({ sourceSlug = isRequired("source slug"), children, ...props }) {
+    const [loading, setLoading] = useState(1);
     const { sourceData = isRequired("source data") } = props;
-    const dispatch = useDispatch();
 
     useEffect(() => {
         if (!sourceSlug) return;
 
-        dispatch(sectionActions.list({ source: sourceSlug }));
-
-        // dispatch(pagesActions.get(sourceSlug))
-        //     .catch((err) => {})
-        //     .then(() => );
-    }, [sourceSlug, dispatch]);
+        sectionActions.list({ source: sourceSlug }).then(() => {
+            setLoading(0);
+        });
+    }, [sourceSlug]);
 
     const form = useForm({ label: sourceData.label || "" });
+
+    if (loading) return <div>Loading ...</div>;
 
     return (
         <>
@@ -56,6 +57,12 @@ const Panel = (props) => {
                     {sections.results.map((data) => (
                         <Section data={data} key={data.slug} />
                     ))}
+                </div>
+
+                <div className="editor-actions">
+                    <SectionAddButton sourceSlug={props.sourceSlug} type="TXT" />
+                    <SectionAddButton sourceSlug={props.sourceSlug} type="MD" />
+                    <SectionAddButton sourceSlug={props.sourceSlug} type="IMG" />
                 </div>
             </div>
         </div>

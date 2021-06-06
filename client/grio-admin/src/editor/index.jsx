@@ -1,4 +1,4 @@
-import { Redirect, Route, Switch } from "react-router";
+import { Redirect, Route, Switch } from "react-router-dom";
 
 import "./editor.scss";
 
@@ -38,8 +38,8 @@ const PageUpdateView = (props) => {
     useEffect(() => {
         if (!pageSlug) return;
 
-        dispatch(pagesActions.get(pageSlug)).catch((err) => {});
-    }, [pageSlug, dispatch]);
+        pagesActions.get(pageSlug).catch((err) => {});
+    }, [pageSlug]);
 
     const page = useSelector((state) => state.pages.items)[`${pageSlug}`];
 
@@ -51,7 +51,7 @@ const PageUpdateView = (props) => {
                 <section className="view-content">
                     <PageUpdateHeader {...props} {...{ pageSlug, dispatch, page }} />
 
-                    <Editor.Panel />
+                    <Editor.Panel sourceSlug={pageSlug} />
                 </section>
             </div>
         </Editor>

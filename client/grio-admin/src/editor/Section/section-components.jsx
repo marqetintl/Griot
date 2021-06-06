@@ -2,6 +2,17 @@ import { ArrowUpCircle, Eye, PencilSquare, Trash } from "react-bootstrap-icons";
 
 import { IconButton } from "@miq/components";
 import { isRequired } from "@miq/utils";
+import { pagesActions } from "../../pages/utils";
+
+export const SectionAddButton = (props) => {
+    const { sourceSlug = isRequired("section source slug"), type = isRequired("section type") } = props;
+
+    const handleCreate = () => {
+        pagesActions.postSection(sourceSlug, { type });
+    };
+
+    return <button onClick={handleCreate}>Add {type}</button>;
+};
 
 export const SectionSaveButton = (props) => {
     const { context = isRequired("section context") } = props;
