@@ -1,6 +1,6 @@
 {
     "private": true,
-    "name": "@miq/griot",
+    "name": "@miq/grio",
     "scripts": {
         "start": "yarn workspace @grio/app start",
         "build": "cd grio-app && yarn build",
@@ -9,8 +9,5 @@
     "dependencies": {
         "lodash": "^4.17.21",
         "react-bootstrap-icons": "^1.4.1"
-    },
-    "devDependencies": {
-        "craco": "^0.0.3"
     }
 }

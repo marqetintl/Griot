@@ -2,6 +2,7 @@ import { lazy, Suspense, useContext } from "react";
 import { Route, Switch } from "react-router-dom";
 import { House, Gear, Files, Bookmark, PersonBadge } from "react-bootstrap-icons";
 
+import Admin from "@miq/admin";
 import { IconNavLink } from "@miq/components";
 import { SharedDataCtx } from "@miq/contexts";
 import { Fallback } from "../index";
@@ -17,23 +18,21 @@ export default function AdminLayout(props) {
     if (!ctx.isLoaded) return <Fallback />;
 
     return (
-        <div id="AdminView">
+        <Admin.Layout >
             <NavBar {...props} {...{ path, ctx }} />
 
-            <main className="grio-main" role="main">
-                <section className="container">
-                    <Suspense fallback={<Fallback />}>
-                        <Switch>
-                            <Route path={`${path}pages/`} component={PagesLayout} />
-                            <Route path={`${path}settings/`} component={SettingsLayout} />
-                            <Route path={`${path}`} component={Dashboard} />
-                        </Switch>
-                    </Suspense>
-                </section>
-            </main>
+            <Admin.Main className="grio-main">
+                <Suspense fallback={<Fallback />}>
+                    <Switch>
+                        <Route path={`${path}pages/`} component={PagesLayout} />
+                        <Route path={`${path}settings/`} component={SettingsLayout} />
+                        <Route path={`${path}`} component={Dashboard} />
+                    </Switch>
+                </Suspense>
+            </Admin.Main>
 
             <MobileNav />
-        </div>
+        </Admin.Layout>
     );
 }
 
@@ -45,7 +44,7 @@ export const NavBar = (props) => {
     const { path, ctx = {} } = props;
 
     return (
-        <nav id="AdminNav" className="grio-nav">
+        <Admin.Navbar id="AdminNav" className="grio-nav">
             <header className="grio-nav-header">
                 <h1>{ctx.site.name}</h1>
             </header>
@@ -66,7 +65,7 @@ export const NavBar = (props) => {
                     <NavItem to={`${path}settings/`} label="Settings" Icon={Gear} />
                 </div>
             </section>
-        </nav>
+        </Admin.Navbar>
     );
 };
 
@@ -79,5 +78,5 @@ const NavItem = (props) => {
 };
 
 export const MobileNav = (props) => {
-    return <nav className="grio-mobile-nav">Mobile</nav>;
+    return <Admin.MobileNavbar className="grio-mobile-nav">Mobile</Admin.MobileNavbar>;
 };
