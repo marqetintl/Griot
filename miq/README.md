@@ -1,1 +1,0 @@
-# Marqetintl Core App
