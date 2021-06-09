@@ -1,1 +1,0 @@
-# Griot Client App

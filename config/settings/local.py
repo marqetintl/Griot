@@ -1,5 +1,6 @@
 import os
 import environ
+from pathlib import Path
 
 from miq.config import *
 
@@ -19,7 +20,15 @@ env = environ.Env(
 
 environ.Env.read_env()
 
-BUILD_DIR = CLIENT_DIR / 'grio-app/build'
+# /Users/marqetintl/Desktop/miq/py/grio/Griot/templates
+
+BASE_DIR = Path(__file__).resolve().parent.parent.parent
+
+CLIENT_DIR = BASE_DIR / 'client'
+TEMPLATES_DIR = BASE_DIR / 'templates'
+BUILD_DIR = CLIENT_DIR / 'build'
+
+print(TEMPLATES_DIR, '././\n')
 
 SECRET_KEY = env('SECRET_KEY')
 
