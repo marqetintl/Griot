@@ -20,15 +20,11 @@ env = environ.Env(
 
 environ.Env.read_env()
 
-# /Users/marqetintl/Desktop/miq/py/grio/Griot/templates
-
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 CLIENT_DIR = BASE_DIR / 'client'
 TEMPLATES_DIR = BASE_DIR / 'templates'
 BUILD_DIR = CLIENT_DIR / 'build'
-
-print(TEMPLATES_DIR, '././\n')
 
 SECRET_KEY = env('SECRET_KEY')
 
