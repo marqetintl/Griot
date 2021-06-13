@@ -50,8 +50,12 @@ INSTALLED_APPS = [
     'rest_framework',
 
     # CORE
-    'grio.apps.GrioConfig',
     'miq.apps.MiqConfig',
+
+    # APPS
+    'grio.apps.GrioConfig',
+    'apps.documents.apps.DocumentsConfig',
+    'apps.hrm.apps.HrmConfig',
 
     # APPS
 ]
@@ -91,7 +95,7 @@ if os.environ.get('GITHUB_WORKFLOW'):
 MIDDLEWARE = [
     # CORS
     'miq.middleware.CORSMiddleware',
-    # 
+    #
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',

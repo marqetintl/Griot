@@ -18,8 +18,8 @@ auth_router.register(r'index', IndexViewset)
 urlpatterns = [
     path(f'{settings.API_PATH}/', include(auth_router.urls)),
 
-    path('pages/', AdminPagesView.as_view(), name="pages"),
+    path('grio/pages/', AdminPagesView.as_view(), name="pages"),
 
     # Catch-all url
-    re_path(r'', AdminView.as_view(), name='index'),
+    re_path(r'grio/', AdminView.as_view(), name='index'),
 ]

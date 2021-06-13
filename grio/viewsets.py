@@ -128,7 +128,11 @@ INDEX PAGE
 """
 
 
-class IndexViewset(PagesActionMixin, mixins.RetrieveModelMixin, mixins.UpdateModelMixin, viewsets.GenericViewSet):
+class IndexViewset(
+        PagesActionMixin, mixins.RetrieveModelMixin,
+        mixins.UpdateModelMixin,
+        viewsets.GenericViewSet):
+
     lookup_field = 'slug'
     serializer_class = IndexSerializer
     queryset = Index.objects.none()

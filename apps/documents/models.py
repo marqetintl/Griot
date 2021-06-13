@@ -1,8 +1,10 @@
+import os
 from django.db import models
 from django.contrib.sites.models import Site
 
 from django.contrib.auth import get_user_model
 from django.utils.translation import gettext_lazy as _
+from django.template.defaultfilters import filesizeformat
 
 from miq.models.mixins import BaseModelMixin
 
@@ -38,7 +40,17 @@ class FileManager(models.Manager):
         return FileQeryset(self.model, *args, using=self._db, **kwargs)
 
 
+class FilePermission(models.TextChoices):
+    VIEW = "VIEW", _('View')
+    COMMENT = "COMMENT", _('Comment')
+    EDIT = "EDIT", _('Edit')
+
+
 class FileShared(BaseModelMixin):
+    permission = models.CharField(
+        _("Permission"), max_length=50,
+        choices=FilePermission.choices, default=FilePermission.VIEW
+    )
     user = models.ForeignKey(
         User, on_delete=models.CASCADE,
         related_name='shared_meta'
@@ -73,12 +85,28 @@ class File(BaseModelMixin):
     objects = FileManager()
 
     class Meta:
-        ordering = ('-created', 'name',)
-        verbose_name = _('Files')
+        ordering = ('-created', '-updated',)
+        verbose_name = _('File')
         verbose_name_plural = _('Files')
 
+    @property
+    def name(self):
+        return self.src.name.split('/')[-1]
+
+    @property
+    def filename(self):
+        return self.src.name.split('/')[0]
+
+    @property
+    def ext(self):
+        return os.path.splitext(self.name)[1]
+
+    @property
+    def size(self):
+        return filesizeformat(self.src.size)
+
     def __str__(self):
-        return f'{self.title}' or self.src.name
+        return f'{self.src}'
 
 
 class Document(File):
@@ -86,6 +114,15 @@ class Document(File):
     title = models.CharField(
         verbose_name=_("Title"),
         max_length=400, blank=True, null=True)
+
+    class Meta:
+        ordering = ('-created', 'title',)
+        verbose_name = _('Document')
+        verbose_name_plural = _('Documents')
+
+    def __str__(self):
+        title = self.title or self.src.name
+        return f'{title}'
 
     # description = models.TextField(
     #     verbose_name=_("Description"),

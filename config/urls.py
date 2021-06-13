@@ -9,7 +9,8 @@ urlpatterns = [
 ]
 
 urlpatterns += [
-    path('grio/', include('grio.urls', namespace='grio')),
+    path('', include('apps.documents.urls', namespace='documents')),
+    path('', include('grio.urls', namespace='grio')),
 ]
 
 # Must be last
