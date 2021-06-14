@@ -10,7 +10,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 from rest_framework import serializers
 
 from miq.models import (Page)
-from grio.serializers import PageSerializer
+from miq.api_auth.serializers import PageSerializer
 
 from miq.views.generic import ListView, TemplateView
 
