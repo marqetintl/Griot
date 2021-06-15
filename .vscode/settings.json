@@ -1,5 +1,5 @@
 {
-    "python.pythonPath": "/Library/Frameworks/Python.framework/Versions/3.9/bin/python3.9",
+    "python.pythonPath": "grioenv/bin/python",
     "prettier.configPath": ".prettierrc",
     "prettier.requireConfig": true,
     "prettier.semi": false,
