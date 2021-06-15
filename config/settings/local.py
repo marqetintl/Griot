@@ -54,8 +54,7 @@ INSTALLED_APPS = [
 
     # APPS
     'grio.apps.GrioConfig',
-    'apps.miq_hrm.apps.HrmConfig',
-    # 'apps.hrm.apps.HrmConfig',
+    'miq_hrm.apps.HrmConfig',
 ]
 
 DATABASES = {
