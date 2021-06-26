@@ -15,6 +15,7 @@ urlpatterns += [
 
 # Must be last
 urlpatterns += [
+    path('', include('miq_dms.urls', namespace='miq_dms')),
     path('', include('miq.urls', namespace='miq')),
 ]
 
