@@ -1,19 +1,30 @@
 asgiref==3.3.4
+astroid==2.5.6
 attrs==21.2.0
 autopep8==1.5.7
 beautifulsoup4==4.9.3
 coverage==5.5
-Django==3.2.2
+Django==3.2.4
 django-environ==0.4.5
 djangorestframework==3.12.4
+flake8==3.9.2
 gunicorn==20.1.0
 iniconfig==1.1.1
+isort==5.8.0
+lazy-object-proxy==1.6.0
+mccabe==0.6.1
+-e git+https://github.com/marqetintl/miq.git@66aa1f9c2eba263754b667bd6f7b045504437ee6#egg=miq
+-e git+https://github.com/michaelgainyo/marqetintl-monorepo.git@ab3105c9c80a77ead505eec6dcae26a057a1a1a4#egg=miq_dms&subdirectory=py/miq-apps/miq_dms
+-e git+https://github.com/michaelgainyo/marqetintl-monorepo.git@ab3105c9c80a77ead505eec6dcae26a057a1a1a4#egg=miq_hrm&subdirectory=py/miq-apps/miq_hrm
 packaging==20.9
+pep8==1.7.1
 Pillow==8.2.0
 pluggy==0.13.1
 psycopg2-binary==2.8.6
 py==1.10.0
 pycodestyle==2.7.0
+pyflakes==2.3.1
+pylint==2.8.3
 pyparsing==2.4.7
 pytest==6.2.4
 pytest-cov==2.11.1
@@ -22,5 +33,8 @@ pytz==2021.1
 selenium==3.141.0
 soupsieve==2.2.1
 sqlparse==0.4.1
+style==1.1.0
 toml==0.10.2
-urllib3==1.26.4
+update==0.0.1
+urllib3==1.26.6
+wrapt==1.12.1

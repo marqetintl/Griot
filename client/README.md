@@ -1,1 +1,1 @@
-# Grio Client Mono Repo
+# Griot Client App
