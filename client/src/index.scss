@@ -1,13 +1,60 @@
-body {
-  margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+// @use "@miq/utils/src/style/main";
+@use "@miq/styles/src/main";
+
+.miq-masonry {
+    display: grid;
+    grid-gap: 2em;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    // grid-auto-rows: 350px;
+    grid-auto-rows: 0px;
+
+    .item {
+        background-color: aqua;
+    }
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+.miq-masonry-rows {
+    display: flex;
+
+    // flex-direction flex-wrap
+    flex-flow: row nowrap;
+
+    // ensure our layout doesn’t overflow
+    max-width: 100%;
+
+    .miq-masonry-item {
+        display: flex;
+        flex-direction: column;
+        overflow: hidden;
+        // order: 1;
+        // width: 25%;
+        // height: 200px;
+
+        .miq-masonry-content {
+            padding: 1px;
+            overflow: hidden;
+        }
+
+        img {
+            &:hover {
+                transform: scale(1.3);
+            }
+        }
+    }
 }
+
+// .miq-masonry-rows {
+//     display: grid;
+//     grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+//     // grid-template-rows: repeat(auto-fill, minmax(200px, 300px));
+
+//     .miq-masonry-img {
+//         height: 200px;
+//         // width: auto;
+//         object-fit: cover;
+//         // width: 250px;
+//         // height: auto;
+//         // height: 100%;
+//         // width: 100%;
+//     }
+// }

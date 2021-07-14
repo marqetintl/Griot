@@ -1,12 +1,44 @@
 import React from "react";
+import thunk from "redux-thunk";
 import ReactDOM from "react-dom";
-import { BrowserRouter, Route, Switch } from "react-router-dom";
-
-import Admin from "@grio/admin";
+// import { Provider as ReduxProvider } from "react-redux";
+import { BrowserRouter, Switch } from "react-router-dom";
+import { createStore, applyMiddleware, compose, combineReducers } from "redux";
+import reportWebVitals from "./reportWebVitals";
 
 import "./index.scss";
 
-import reportWebVitals from "./reportWebVitals";
+import { IS_DEV } from "@miq/utils";
+import { AdminRoute } from "@miq/admin";
+import { SharedDataProvider } from "@miq/contexts";
+
+import Admin from "./admin";
+
+const initialState = {};
+const reducers = combineReducers({
+    // pages: pagesReducer, sections: sectionsReducer
+});
+
+/**
+ *
+ */
+
+export const configStore = () => {
+    const middleware = [thunk];
+    let enhancers = [applyMiddleware(...middleware)];
+    if (IS_DEV) {
+        enhancers = [
+            ...enhancers,
+            window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
+        ];
+    }
+    return createStore(reducers, initialState, compose(...enhancers));
+};
+// export const store = configStore();
+
+/**
+ *
+ */
 
 const root = document.getElementById("root");
 
@@ -14,10 +46,14 @@ if (root) {
     ReactDOM.render(
         <React.StrictMode>
             <BrowserRouter>
-                <Switch>
-                    {/* /grio/ */}
-                    <Route path="/grio/" component={Admin} />
-                </Switch>
+                <SharedDataProvider>
+                    {/* <ReduxProvider store={store}> */}
+                    <Switch>
+                        {/* /grio/ */}
+                        <AdminRoute path="/grio/" component={Admin} />
+                    </Switch>
+                    {/* </ReduxProvider> */}
+                </SharedDataProvider>
             </BrowserRouter>
         </React.StrictMode>,
         root
