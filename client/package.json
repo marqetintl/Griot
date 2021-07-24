@@ -10,6 +10,7 @@
         "@miq/contexts": "workspace:*",
         "@miq/dms": "workspace:*",
         "@miq/form": "workspace:*",
+        "@miq/hrmjs": "workspace:*",
         "@miq/styles": "workspace:*",
         "@miq/utils": "workspace:*",
         "@testing-library/jest-dom": "^5.11.4",

@@ -1,7 +1,9 @@
-import Form, { useForm } from "@miq/form";
-import { services, AdminView, hasPerms } from "@miq/admin";
-import { SharedDataCtx } from "@miq/contexts";
 import { useContext } from "react";
+
+import Form, { useForm } from "@miq/form";
+import { services, AdminView } from "@miq/admin";
+import { SharedDataCtx } from "@miq/contexts";
+import { AvatarUploadButton } from "@miq/components";
 
 import "./profile.scss";
 
@@ -73,9 +75,12 @@ export const UserProfileUpdateView = (props) => {
                 <section className="mb-3">
                     <div className="mb-2">
                         <h3>Avatar</h3>
-                        <p className="text-muted text-sm">
+                        <p className="text-muted text-sm mb-2">
                             Update your profile picture. Images must be .png, .jpg or .gif format.
                         </p>
+                        <div className="">
+                            <AvatarUploadButton />
+                        </div>
                     </div>
                 </section>
 

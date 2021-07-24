@@ -1,11 +1,11 @@
+import { useContext } from "react";
+
 import { AdminView } from "@miq/admin";
 import { SharedDataCtx } from "@miq/contexts";
-import { useContext } from "react";
 
 export default function DashboardView(props) {
     const { user } = useContext(SharedDataCtx);
 
-    // const [items, setI] = useState(i1);
     return (
         <AdminView title="Dashboard" actions={<>Ajouter document</>} className="">
             <div className="">
