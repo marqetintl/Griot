@@ -1,7 +1,7 @@
 import { lazy, Suspense, useContext } from "react";
 import { Switch } from "react-router-dom";
 
-import { Icons } from "@miq/components";
+import { Icons, Loading } from "@miq/components";
 
 import { SharedDataCtx } from "@miq/contexts";
 
@@ -12,16 +12,20 @@ import DashboardView from "./DashboardView";
 import { UserProfileUpdateView } from "../Profile";
 
 const DocumentRoutes = lazy(() => import("@miq/dms"));
+const HrmRoutes = lazy(() => import("@miq/hrmjs"));
+
 // const SettingsLayout = lazy(() => import("../settings"));
 
 export default function AdminLayout(props) {
     const ctx = useContext(SharedDataCtx);
 
     if (!ctx) return null;
-    // if (!ctx.isLoaded) return <div>Loading ...</div>;
+    if (!ctx.isLoaded) return <Loading />;
 
-    const { user } = ctx;
+    const { user, company } = ctx;
     const { path } = props.match;
+
+    console.log(company);
 
     return (
         <Layout {...props}>
@@ -45,6 +49,12 @@ export default function AdminLayout(props) {
                                 // requiredPerms={["miq.view_setting"]}
                             />
                         )}
+                        <AdminSidebar.NavLink
+                            to={`${path}company/`}
+                            label="Company"
+                            Icon={Icons.Person}
+                            requiredPerms={["miq_hrm.view_employee"]}
+                        />
                         <AdminSidebar.NavLink
                             to={`${path}settings/`}
                             label="Settings"
@@ -74,12 +84,17 @@ export default function AdminLayout(props) {
             </AdminSidebar>
 
             <AdminMain className="grio-main">
-                <Suspense fallback={<div>Loading ...</div>}>
+                <Suspense fallback={<Loading />}>
                     <Switch>
                         <AdminRoute
                             path={`${path}documents/`}
                             component={DocumentRoutes}
                             requiredPerms={["miq_dms.view_document"]}
+                        />
+                        <AdminRoute
+                            path={`${path}company/`}
+                            component={HrmRoutes}
+                            requiredPerms={["miq_hrm.view_employee"]}
                         />
 
                         <AdminRoute path={`${path}pages/`} component={PagesLayout} requiredPerms={["miq.view_page"]} />
