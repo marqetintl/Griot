@@ -56,6 +56,8 @@ INSTALLED_APPS = [
     'grio.apps.GrioConfig',
     'miq_hrm.apps.HrmConfig',
     'miq_dms.apps.DmsConfig',
+
+    'wallet',
 ]
 
 DATABASES = {
