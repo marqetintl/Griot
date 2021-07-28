@@ -4,11 +4,10 @@
     "private": true,
     "main": "src/index.jsx",
     "dependencies": {
-        "@grio/admin": "workspace:*",
-        "@miq/admin": "workspace:*",
+        "@miq/adminjs": "workspace:*",
         "@miq/components": "workspace:*",
         "@miq/contexts": "workspace:*",
-        "@miq/dms": "workspace:*",
+        "@miq/dmsjs": "workspace:*",
         "@miq/form": "workspace:*",
         "@miq/hrmjs": "workspace:*",
         "@miq/styles": "workspace:*",
@@ -37,7 +36,7 @@
         "sass": "^1.32.12"
     },
     "scripts": {
-        "start": "craco start --config ../../../../craco.config.js --workspace",
+        "start": "PORT=3000 HOST=127.0.0.1 craco start --config ../../../../craco.config.js --workspace",
         "wbuild": "craco build  --config ../../../../craco.config.js --workspace",
         "build": "yarn workspace @grio/client wbuild",
         "test": "craco test",

@@ -5,13 +5,13 @@ import { Icons, Loading } from "@miq/components";
 
 import { SharedDataCtx } from "@miq/contexts";
 
-import { AdminLayout as Layout, AdminSidebar, AdminMain } from "@miq/admin";
-import { PagesLayout, SettingsLayout, AdminRoute } from "@miq/admin";
+import { AdminLayout as Layout, AdminSidebar, AdminMain } from "@miq/adminjs";
+import { PagesLayout, SettingsLayout, AdminRoute } from "@miq/adminjs";
 
 import DashboardView from "./DashboardView";
 import { UserProfileUpdateView } from "../Profile";
 
-const DocumentRoutes = lazy(() => import("@miq/dms"));
+const DocumentRoutes = lazy(() => import("@miq/dmsjs"));
 const HrmRoutes = lazy(() => import("@miq/hrmjs"));
 
 // const SettingsLayout = lazy(() => import("../settings"));
@@ -22,10 +22,8 @@ export default function AdminLayout(props) {
     if (!ctx) return null;
     if (!ctx.isLoaded) return <Loading />;
 
-    const { user, company } = ctx;
+    const { user } = ctx;
     const { path } = props.match;
-
-    console.log(company);
 
     return (
         <Layout {...props}>
@@ -84,7 +82,7 @@ export default function AdminLayout(props) {
             </AdminSidebar>
 
             <AdminMain className="grio-main">
-                <Suspense fallback={<Loading />}>
+                <Suspense fallback={<Loading label="Main loading" />}>
                     <Switch>
                         <AdminRoute
                             path={`${path}documents/`}

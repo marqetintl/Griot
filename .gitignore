@@ -2,7 +2,7 @@
 # Django stuff:
 */media/
 media/
-# static/
+static/
 *.log
 *.pot
 *.pyc

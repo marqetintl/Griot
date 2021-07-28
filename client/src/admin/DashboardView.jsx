@@ -1,6 +1,6 @@
 import { useContext } from "react";
 
-import { AdminView } from "@miq/admin";
+import { AdminView } from "@miq/adminjs";
 import { SharedDataCtx } from "@miq/contexts";
 
 export default function DashboardView(props) {

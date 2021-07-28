@@ -1,4 +1,4 @@
-import { AdminView } from "@miq/admin";
+import { AdminView } from "@miq/adminjs";
 import { createRef, useState } from "react";
 
 
