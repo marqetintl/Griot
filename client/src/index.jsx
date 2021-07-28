@@ -9,7 +9,7 @@ import reportWebVitals from "./reportWebVitals";
 import "./index.scss";
 
 import { IS_DEV } from "@miq/utils";
-import { AdminRoute } from "@miq/admin";
+import { AdminRoute } from "@miq/adminjs";
 import { SharedDataProvider } from "@miq/contexts";
 
 import Admin from "./admin";

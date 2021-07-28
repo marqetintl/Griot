@@ -1,7 +1,7 @@
 import { useContext } from "react";
 
 import Form, { useForm } from "@miq/form";
-import { services, AdminView } from "@miq/admin";
+import { services, AdminView } from "@miq/adminjs";
 import { SharedDataCtx } from "@miq/contexts";
 import { AvatarUploadButton } from "@miq/components";
 

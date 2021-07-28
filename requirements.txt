@@ -13,9 +13,9 @@ iniconfig==1.1.1
 isort==5.8.0
 lazy-object-proxy==1.6.0
 mccabe==0.6.1
--e git+https://github.com/marqetintl/miq.git@1c85cec89e274aadb03d6fbf81b16ab11edaf57a#egg=miq
--e git+https://github.com/marqetintl/miq_dms.git@05018881d70dd5a3e446905f85847bef55e1c45e#egg=miq_dms
--e git+https://github.com/marqetintl/miq_hrm.git@d5b1b64eb10e611626cd83fa4abf439f73923c8c#egg=miq_hrm
+-e git+https://github.com/marqetintl/miq.git@main#egg=miq
+-e git+https://github.com/marqetintl/miq_dms.git@main#egg=miq_dms
+-e git+https://github.com/marqetintl/miq_hrm.git@main#egg=miq_hrm
 packaging==20.9
 pep8==1.7.1
 Pillow==8.2.0
