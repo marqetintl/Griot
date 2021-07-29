@@ -18,7 +18,12 @@ export const UserProfileUpdateView = (props) => {
 
     const saveAccount = ({ name, value }) => {
         services
-            .patch("account/current/", { [name]: value }, { [name]: user[name] })
+            .patch(
+                "account/current/",
+                { [name]: value },
+                { [name]: user[name] },
+                { headers: { "content-type": "application/json" } }
+            )
             .then((data) => {
                 updateUser(data);
             })
