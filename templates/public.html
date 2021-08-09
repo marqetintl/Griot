@@ -1,6 +1,4 @@
-{% extends 'base.html' %}
-
-{% load i18n %}
+{% extends 'base.html' %}{% load i18n %}
 
 <style type="text/css">
 {% block css %}
@@ -17,15 +15,13 @@
 {% endblock meta %}
 
 {% block body %}
-<div class="Public">
+<div class="miq-public">
+    <header class="miq-public-header" id="PublicHeader">{% block header %}{% endblock header %}</header>
 
-    <header id="PublicHeader">{% block header %}{% endblock header %}</header>
-
-    <main id="PublicBody" role="main">{% block main %}{% endblock main %}</main>
-
-    <footer id="PublicFooter">{% block footer %}{% endblock footer %}</footer>
+    <main class="miq-public-body" id="PublicBody" role="main">{% block main %}{% endblock main %}</main>
 
     {{ block.super }}
-
+    
+    <footer class="miq-public-footer" id="PublicFooter">{% block footer %}{% endblock footer %}</footer>
 </div>
 {% endblock body %}

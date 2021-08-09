@@ -13,7 +13,9 @@
 
 {% block head_scripts %} {% endblock head_scripts %} 
 
+{% if sharedData %}
 {{ sharedData|json_script:"sharedData" }}
+{% endif %}
 
 {% endspaceless %} 
 {% endblock head %}

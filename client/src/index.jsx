@@ -49,8 +49,7 @@ if (root) {
                 <SharedDataProvider>
                     {/* <ReduxProvider store={store}> */}
                     <Switch>
-                        {/* /grio/ */}
-                        <AdminRoute path="/grio/" component={Admin} />
+                        <AdminRoute path="/staff/" component={Admin} />
                     </Switch>
                     {/* </ReduxProvider> */}
                 </SharedDataProvider>

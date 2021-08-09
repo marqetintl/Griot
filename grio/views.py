@@ -4,7 +4,7 @@ from django.contrib.auth.mixins import PermissionRequiredMixin
 
 from miq.staff.views import AdminViewMixin
 from miq.models import Page
-from miq.staff.api.serializers import PageSerializer
+from miq.staff import PageSerializer
 
 from miq.views.generic import ListView
 
