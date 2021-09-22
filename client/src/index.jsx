@@ -1,22 +1,22 @@
-import React from "react";
-import thunk from "redux-thunk";
-import ReactDOM from "react-dom";
+import React from 'react';
+import thunk from 'redux-thunk';
+import ReactDOM from 'react-dom';
 // import { Provider as ReduxProvider } from "react-redux";
-import { BrowserRouter, Switch } from "react-router-dom";
-import { createStore, applyMiddleware, compose, combineReducers } from "redux";
-import reportWebVitals from "./reportWebVitals";
+import { BrowserRouter, Switch } from 'react-router-dom';
+import { createStore, applyMiddleware, compose, combineReducers } from 'redux';
+import reportWebVitals from './reportWebVitals';
 
-import "./index.scss";
+import './index.scss';
 
-import { IS_DEV } from "@miq/utils";
-import { AdminRoute } from "@miq/adminjs";
-import { SharedDataProvider } from "@miq/contexts";
+import { IS_DEV, STAFF_PATH } from '@miq/utils';
+import { AdminRoute } from '@miq/adminjs';
+import { SharedDataProvider } from '@miq/contexts';
 
-import Admin from "./admin";
+import Admin from './admin';
 
 const initialState = {};
 const reducers = combineReducers({
-    // pages: pagesReducer, sections: sectionsReducer
+  // pages: pagesReducer, sections: sectionsReducer
 });
 
 /**
@@ -24,15 +24,12 @@ const reducers = combineReducers({
  */
 
 export const configStore = () => {
-    const middleware = [thunk];
-    let enhancers = [applyMiddleware(...middleware)];
-    if (IS_DEV) {
-        enhancers = [
-            ...enhancers,
-            window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f,
-        ];
-    }
-    return createStore(reducers, initialState, compose(...enhancers));
+  const middleware = [thunk];
+  let enhancers = [applyMiddleware(...middleware)];
+  if (IS_DEV) {
+    enhancers = [...enhancers, window.__REDUX_DEVTOOLS_EXTENSION__ ? window.__REDUX_DEVTOOLS_EXTENSION__() : (f) => f];
+  }
+  return createStore(reducers, initialState, compose(...enhancers));
 };
 // export const store = configStore();
 
@@ -40,23 +37,23 @@ export const configStore = () => {
  *
  */
 
-const root = document.getElementById("root");
+const root = document.getElementById('root');
 
 if (root) {
-    ReactDOM.render(
-        <React.StrictMode>
-            <BrowserRouter>
-                <SharedDataProvider>
-                    {/* <ReduxProvider store={store}> */}
-                    <Switch>
-                        <AdminRoute path="/staff/" component={Admin} />
-                    </Switch>
-                    {/* </ReduxProvider> */}
-                </SharedDataProvider>
-            </BrowserRouter>
-        </React.StrictMode>,
-        root
-    );
+  ReactDOM.render(
+    <React.StrictMode>
+      <BrowserRouter>
+        <SharedDataProvider>
+          {/* <ReduxProvider store={store}> */}
+          <Switch>
+            <AdminRoute path={STAFF_PATH} component={Admin} />
+          </Switch>
+          {/* </ReduxProvider> */}
+        </SharedDataProvider>
+      </BrowserRouter>
+    </React.StrictMode>,
+    root
+  );
 }
 
 // If you want to start measuring performance in your app, pass a function
